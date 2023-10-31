@@ -13,6 +13,13 @@ export default function Home() {
   useEffect(()=>{
     loadData();
   },[])
+  const deleteContact=(id)=>{
+    if(window.confirm("Are you sure you want to delete this contact")){
+      axios.delete(`http://localhost:5000/api/remove/${id}`);
+      toast.success("contact deleted successfully");
+      setTimeout(()=>loadData(),500);
+    }
+  }
   return (
     <div style ={{marginTop: "150px"}}>
       <Link to="/addContact">
@@ -41,7 +48,8 @@ export default function Home() {
                   <Link to={`/updates/${item.id}`}>
                   <button className="btn btn-edit">Edit</button>
                   </Link>
-                  <button className="btn btn-delete">Delete</button>
+                  <button className="btn btn-delete" onClick={()=>deleteContact(item.id)}
+                  dd>Delete</button>
                   <Link to={`/view/${item.id}`}>
                   <button className="btn btn-view">View</button>
                   </Link> 

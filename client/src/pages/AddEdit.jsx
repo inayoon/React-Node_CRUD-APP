@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {useHistory, useParams, Link} from "react-router-dom"
+import {useNavigate, useParams, Link} from "react-router-dom"
 import "./AddEdit.css";
 import axios from "axios";
 import {toast} from "react-toastify";
@@ -13,9 +13,25 @@ const initialState = {
 export default function AddEdit() {
   const [state, setState]= useState(initialState);
   const { name, email, contact } = state;
+  const navigate = useNavigate();
   const handleSubmit=(e)=>{
     e.preventDefault();
-  }
+    if(!name || !email || !contact){
+      toast.error("Please provide value into each input field");
+    } else{
+      axios.post("http://localhost:5000/api/post", {
+        name,
+        email,
+        contact,
+      })
+      .then(()=>{
+        setState({name:"", email:"", contact:""})
+      })
+      .catch((err)=> toast.error(err.response.data));
+      toast.success("Contact Added Successfully");
+      setTimeout(()=>navigate("/"), 500);
+    }
+  };
   const handleInputChange=(e)=>{
     const {name, value} = e.target;
     setState({...state, [name]: value })
@@ -45,7 +61,7 @@ export default function AddEdit() {
           />
         <label htmlFor="contact">Contact</label>
         <input
-          type="number"
+          type="string"
           id="contact"
           name="contact"
           placeholder="Your Contact no: . . "
