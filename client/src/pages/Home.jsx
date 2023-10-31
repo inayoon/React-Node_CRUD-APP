@@ -45,8 +45,8 @@ export default function Home() {
                 <td>{item.email}</td>
                 <td>{item.contact}</td>
                 <td>
-                  <Link to={`/updates/${item.id}`}>
-                  <button className="btn btn-edit">Edit</button>
+                  <Link to={`/update/${item.id}`}>
+                  <button className="btn btn-edit" >Edit</button>
                   </Link>
                   <button className="btn btn-delete" onClick={()=>deleteContact(item.id)}
                   dd>Delete</button>
