@@ -18,6 +18,7 @@ export default function AddEdit() {
   useEffect (()=>{
     axios.get(`http://localhost:5000/api/get/${id}`).then((resp)=> setState({ ...resp.data[0] }))
   },[id])
+  
   const handleSubmit=(e)=>{
     e.preventDefault();
     if(!name || !email || !contact){
